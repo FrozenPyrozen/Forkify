@@ -55,7 +55,7 @@ export default class Recipe {
       "pound"
     ];
 
-    const units = [...unitsShort, 'kg', 'g'];
+    const units = [...unitsShort, "kg", "g"];
     const newIngredients = this.ingredients.map(el => {
       // 1) Uniform units
       let ingredient = el.toLowerCase();
@@ -91,8 +91,7 @@ export default class Recipe {
         };
       } else if (parseInt(arrIng[0], 10)) {
         // There is no unit but first element is number
-        
-        
+
         objIng = {
           count: parseInt(arrIng[0], 10),
           unit: "",
@@ -110,5 +109,17 @@ export default class Recipe {
       return objIng;
     });
     this.ingredients = newIngredients;
+  }
+
+  updateServings(type) {
+    // Servings
+    const newServings = type === "dec" ? this.servings - 1 : this.servings + 1;
+
+    // Ingredients
+    this.ingredients.forEach(ing => {
+      ing.count *= newServings / this.servings;
+    });
+
+    this.servings = newServings;
   }
 }
